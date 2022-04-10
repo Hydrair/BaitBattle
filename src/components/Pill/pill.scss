@@ -1,0 +1,36 @@
+.pill {
+    width: 80vw;
+    height: auto;
+    display: grid;
+    grid-template-areas:
+        "fish fish"
+        "break break"
+        "length points";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0;
+    row-gap: 0.5rem;
+    padding: 10px;
+    justify-items: center;
+    border: 1px solid var(--gray-dark);
+    border-radius: 50px;
+    background-color: white;
+
+    h2 {
+        grid-area: fish;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0 auto;
+    }
+    .break {
+        width: 100%;
+        height: 1px;
+        background-color: var(--gray-dark);
+    }
+    p.length {
+        grid-area: length;
+    }
+    p.points {
+        grid-area: points;
+    }
+}

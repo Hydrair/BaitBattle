@@ -1,0 +1,41 @@
+.usercard {
+    display: grid;
+    grid-template-areas:
+        "img name"
+        "img rank"
+        "img points";
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1rem;
+
+    > * {
+        margin: 0;
+    }
+
+    img {
+        grid-area: img;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 1rem 0 0;
+        object-fit: cover;
+    }
+    h1 {
+        grid-area: name;
+        // font-size: 1.2rem;
+        // font-weight: bold;
+        // margin: 0 auto;
+    }
+    p.rank {
+        grid-area: rank;
+        // font-size: 1.2rem;
+        // font-weight: bold;
+        // margin: 0 auto;
+    }
+    p.points {
+        grid-area: points;
+        // font-size: 1.2rem;
+        // font-weight: bold;
+        // margin: 0 auto;
+    }
+}

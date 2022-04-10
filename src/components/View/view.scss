@@ -1,0 +1,17 @@
+.view {
+    > * {
+        margin: 1rem;
+    }
+    header {
+        margin: 0;
+    }
+    .center {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        > * {
+            margin: 0.5rem 0rem;
+        }
+    }
+}

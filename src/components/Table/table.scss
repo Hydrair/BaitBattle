@@ -1,0 +1,22 @@
+@import "../../variables.scss";
+table {
+    margin: auto;
+    margin-top: 1rem;
+    width: 90%;
+    border-collapse: collapse;
+    th {
+        color: var(--gray-light);
+        background-color: var(--blue);
+        border: 1px solid var(--blue);
+    }
+    tbody {
+        td {
+            padding: 1rem;
+            border: 1px solid var(--blue);
+            box-sizing: border-box;
+        }
+        td:last-child {
+            white-space: nowrap;
+        }
+    }
+}
