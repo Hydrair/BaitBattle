@@ -34,17 +34,23 @@ export function Profile(props: ProfileProps): JSX.Element {
                 <h2>Zielfische</h2>
                 {userJson.fish !== undefined &&
                     userJson.fish
-                        .filter((fish) => fish.target)
-                        .sort((a, b) => a.species - b.species)
-                        .map((fish) => {
+                        .filter((fish: { target: any }) => fish.target)
+                        .sort(
+                            (a: { species: number }, b: { species: number }) =>
+                                a.species - b.species
+                        )
+                        .map((fish: any) => {
                             return <Pill fish={fish} key={fish.id} />;
                         })}
                 <h3>Weitere Wertungsfische</h3>
                 {userJson.fish !== undefined &&
                     userJson.fish
-                        .filter((fish) => !fish.target)
-                        .sort((a, b) => a.species - b.species)
-                        .map((fish) => {
+                        .filter((fish: { target: any }) => !fish.target)
+                        .sort(
+                            (a: { species: number }, b: { species: number }) =>
+                                a.species - b.species
+                        )
+                        .map((fish: any) => {
                             return <Pill fish={fish} key={fish.id} />;
                         })}
             </section>
