@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { View } from "../../components/View";
+import NavBar from "../../ui-components/NavBar";
 import "./home.scss";
 
 export interface HomeProps {}
