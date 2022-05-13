@@ -7,21 +7,28 @@ import { User } from "../../types";
 import { useQuery } from "react-query";
 import "./profile.scss";
 
-export interface ProfileProps {
-    username: string;
-}
+export interface ProfileProps {}
 
 export function Profile(props: ProfileProps): JSX.Element {
+    let name = location.pathname.split("/")[2];
+
+    if (name == undefined || name == "undefined") {
+        return (
+            <View>
+                <h1>Bitte einloggen</h1>
+            </View>
+        );
+    }
     const user = useQuery("user", () =>
-        fetch(`${url}/user?username=${props.username}`).then((res) =>
-            res.json()
-        )
+        fetch(`${url}/user`).then((res) => res.json())
     );
 
     if (user.isLoading) {
         return <View>Loading...</View>;
     }
-    const userJson = user.data.Items[0];
+    const userJson = user.data.Items.filter(
+        (user: User) => user.username == name
+    )[0];
     return (
         <View>
             <UserCard

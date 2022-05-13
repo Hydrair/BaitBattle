@@ -88,7 +88,7 @@ export function Login(props: LoginProps): JSX.Element {
         }
     };
 
-    if (user["id"] != undefined) {
+    if (user == ({} as User)) {
         return <></>;
     }
 

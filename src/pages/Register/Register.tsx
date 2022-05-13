@@ -139,9 +139,7 @@ export function Register(props: RegisterProps): JSX.Element {
                 document
                     .getElementById("password2")
                     ?.append("<p>" + ret.msg + "</p>");
-                console.log(ret.msg);
-
-                // window.location.href = `/profile/${ret.user!.username}`;
+                window.location.href = `/profile/${ret.user!.username}`;
                 break;
             default:
                 break;

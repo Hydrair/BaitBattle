@@ -29,7 +29,8 @@ class StorageWrapper {
 
     //clear user from localstorage or sessionstorage
     clearUser() {
-        this.storage.removeItem("user");
+        sessionStorage.removeItem("user");
+        localStorage.removeItem("user");
     }
 }
 

@@ -3,19 +3,21 @@ import "./ranking.scss";
 import { Table } from "../../components/Table";
 import { View } from "../../components/View";
 import { User } from "../../types";
+import { url } from "../../services/provider";
+import { useQuery } from "react-query";
+
 export interface RankingProps {}
 
 export function Ranking(props: RankingProps): JSX.Element {
-    const [user, setUser] = useState([{} as User]);
-
-    useEffect(() => {
-        fetch("/user/0")
-            .then((res) => res.json())
-            .then((data) => setUser(data));
-    }, []);
+    const user = useQuery("user", () =>
+        fetch(`${url}/user`).then((res) => res.json())
+    );
+    if (user.isLoading) {
+        return <View>Loading...</View>;
+    }
     return (
         <View>
-            <Table data={user} />
+            <Table data={user.data.Items} />
         </View>
     );
 }
