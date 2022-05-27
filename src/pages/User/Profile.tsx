@@ -1,37 +1,111 @@
-import { useState, useEffect } from "react";
-import { Pill } from "../../components/Pill";
-import { UserCard } from "../../components/UserCard";
-import { View } from "../../components/View";
-import { url } from "../../services/provider";
-import { User } from "../../types";
-import { useQuery } from "react-query";
 import "./profile.scss";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import { DataStore, Predicates, SortDirection } from "aws-amplify";
+import { Fish, User } from "../../models";
+import { useEffect, useState } from "react";
+import UpdateProfile from "./UpdateProfile";
+import { UserCard } from "../../components/UserCard";
+import { Pill } from "../../components/Pill";
+import UpdateFish from "./UpdateFish";
 
 export interface ProfileProps {}
+enum Setup {
+    NewUser,
+    Profile,
+    Change,
+}
 
-export function Profile(props: ProfileProps): JSX.Element {
-    let name = location.pathname.split("/")[2];
+function Profile({ signOut, user }): JSX.Element {
+    const [hasProfile, setHasProfile] = useState<User>();
+    const [hasSetup, setHasSetup] = useState(Setup.Profile);
+    const [fish, setFish] = useState<Fish[]>();
+    const [fishCount, setFishCount] = useState(0);
+    const [rank, setRank] = useState(0);
 
-    if (name == undefined || name == "undefined") {
+    useEffect(() => {
+        const getProfile = async (id: string) => {
+            const user = await DataStore.query(User, (u) => u.owner("eq", id));
+            if (user.length > 0) {
+                setHasProfile(user[0]);
+            } else {
+                await DataStore.save(
+                    new User({
+                        firstName: "",
+                        lastName: "",
+                        avatar: "",
+                        fish: [],
+                        rank: 0,
+                        points: 0,
+                        owner: id,
+                    })
+                );
+                setHasSetup(Setup.NewUser);
+            }
+        };
+        const getFish = async (id: string) => {
+            const fish = await DataStore.query(Fish, (u) => u.userID("eq", id));
+            setFish(fish);
+            setFishCount(fish.length);
+        };
+        const getRank = async (id: string) => {
+            const users = await DataStore.query(User, Predicates.ALL, {
+                sort: (u) => u.points(SortDirection.DESCENDING),
+            });
+            setRank(users.indexOf(users.filter((u) => u.owner === id)[0]) + 1);
+        };
+        getRank(user.attributes.sub);
+        getProfile(user.attributes.sub);
+        getFish(user.attributes.sub);
+    }, [user, hasSetup, fishCount]);
+
+    const filledout = () => {
+        setHasSetup(Setup.Profile);
+    };
+
+    if (hasSetup === Setup.NewUser || hasSetup === Setup.Change) {
         return (
-            <View>
-                <h1>Bitte einloggen</h1>
-            </View>
+            <>
+                <UpdateProfile
+                    update={filledout}
+                    signOut={signOut}
+                    user={user}
+                />
+            </>
+        );
+    } else if (hasProfile) {
+        return (
+            <>
+                <UserCard
+                    name={`${hasProfile.firstName} ${hasProfile.lastName}`}
+                    rank={rank}
+                    points={hasProfile.points}
+                    img={hasProfile.avatar}
+                />
+                <button onClick={() => setHasSetup(Setup.Change)}>
+                    Profil bearbeiten
+                </button>
+                <section>
+                    <h2>Fische</h2>
+                    <UpdateFish
+                        update={() => setFishCount(fishCount + 1)}
+                        signOut={signOut}
+                        user={user}
+                    />
+                    {fishCount > 0 &&
+                        fish &&
+                        fish.map((fish) => <Pill fish={fish} key={fish.id} />)}
+                </section>
+            </>
         );
     }
-    const user = useQuery("user", () =>
-        fetch(`${url}/user`).then((res) => res.json())
-    );
-
-    if (user.isLoading) {
-        return <View>Loading...</View>;
-    }
-    const userJson = user.data.Items.filter(
-        (user: User) => user.username == name
-    )[0];
-    return (
-        <View>
-            <UserCard
+    return <></>;
+    // return (
+    //     <>
+    //         <h1>Profil</h1>
+    //         <h1>Hey, {user.attributes.email}</h1>
+    //         <button onClick={signOut}>Sign out</button>
+    {
+        /* <UserCard
                 name={`${userJson.firstName} ${userJson.lastName}`}
                 rank={userJson.rank}
                 points={userJson.points}
@@ -60,7 +134,12 @@ export function Profile(props: ProfileProps): JSX.Element {
                         .map((fish: any) => {
                             return <Pill fish={fish} key={fish.id} />;
                         })}
-            </section>
-        </View>
-    );
+            </section> */
+    }
+    {
+        /* </>
+    ); */
+    }
 }
+
+export default withAuthenticator(Profile);

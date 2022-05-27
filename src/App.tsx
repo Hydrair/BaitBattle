@@ -1,60 +1,51 @@
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-import { Home } from "./pages/Home";
 import { Route, Routes } from "react-router";
-import { Profile } from "./pages/User";
 import { NoMatch } from "./NoMatch";
 import { Login } from "./pages/Login";
-import { Ranking } from "./pages/Ranking";
 import { Register } from "./pages/Register";
-import { storageWrapper } from "./services/storagewrapper";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import { Amplify } from "aws-amplify";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
+import { Amplify, API, PubSub, DataStore } from "aws-amplify";
 
 import awsmobile from "./aws-exports";
+import Ranking from "./pages/Ranking/Ranking";
+import { View } from "./components/View";
+import Profile from "./pages/User/Profile";
+import { Home } from "./pages/Home/Home";
+
+// import { initSchema } from "@aws-amplify/datastore";
+// import { schema } from "./models/schema";
+
 Amplify.configure(awsmobile);
-function App({ signOut, user }) {
+// PubSub.configure(awsmobile);
+// API.configure(awsmobile);
+DataStore.configure();
+// let models;
+// if (typeof window !== "undefined") {
+//     models = initSchema(schema);
+// }
+
+function App() {
     return (
-        <>
-            <h1>Hello {user.username}</h1>
-            <button onClick={signOut}>Sign out</button>
-        </>
+        <Authenticator.Provider>
+            <QueryClientProvider client={new QueryClient()}>
+                <BrowserRouter>
+                    <View>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/profile" element={<Profile />} />
+
+                            <Route path="/ranking" element={<Ranking />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="*" element={<NoMatch />} />
+                        </Routes>
+                    </View>
+                </BrowserRouter>
+            </QueryClientProvider>
+        </Authenticator.Provider>
     );
 }
 
-export default withAuthenticator(App);
-// function App({ signOut, user }) {
-//     return (
-//         <Authenticator.Provider>
-//             <QueryClientProvider client={new QueryClient()}>
-//                 <BrowserRouter>
-//                     <>
-//                         <h1>Hello {user.username}</h1>
-//                         <button onClick={signOut}>Sign out</button>
-//                     </>
-//                     <Routes>
-//                         <Route path="/" element={<Home />} />
-//                         <Route
-//                             path="/profile/:userName"
-//                             element={
-//                                 <Profile
-//                                     username={storageWrapper.getUser().username}
-//                                 />
-//                             }
-//                         />
-//                         <Route path="/login" element={<Login />} />
-//                         <Route path="/ranking" element={<Ranking />} />
-//                         <Route path="/register" element={<Register />} />
-//                         <Route path="*" element={<NoMatch />} />
-//                     </Routes>
-//                 </BrowserRouter>
-//             </QueryClientProvider>
-//         </Authenticator.Provider>
-//     );
-// }
-//
-// export default App;
+export default App;

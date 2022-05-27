@@ -2,8 +2,8 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "baitbae15e2759",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "baitbad4a6ef28",
     "userPoolName": "BaitBattle",
     "autoVerifiedAttributes": [
       "email"
@@ -25,9 +25,9 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "BaitBae15e2759_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "BaitBad4a6ef28_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "e15e2759",
+    "sharedId": "d4a6ef28",
     "resourceName": "BaitBattle",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
@@ -38,6 +38,20 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": []
   }
 }

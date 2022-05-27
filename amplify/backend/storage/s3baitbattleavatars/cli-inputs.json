@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3baitbattleavatars",
+  "bucketName": "baitbattle-avatars",
+  "policyUUID": "2f34b81f",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

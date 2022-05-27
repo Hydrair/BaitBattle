@@ -1,35 +1,37 @@
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { isLoggedIn } from "../../services/isLoggedIn";
 import { storageWrapper } from "../../services/storagewrapper";
 import { User } from "../../types";
 import "./header.scss";
 export const Header = (): JSX.Element => {
-    const user = storageWrapper.getUser();
+    const { user, signOut } = useAuthenticator((context) => [context.user]);
+
     return (
         <header>
             <nav>
                 <ul>
-                    <Link to="/">
-                        <li>
+                    <li>
+                        <Link to="/">
                             <img src="/img/logo2.png" />
                             Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/ranking">Rangliste</Link>
+                    </li>
+                    <li>
+                        <Link to={`/profile`}>Profil</Link>
+                    </li>
+                    {user ? (
+                        <li onClick={signOut}>
+                            <Link to="/">Logout</Link>
                         </li>
-                    </Link>
-                    <Link to="/ranking">
-                        <li>Rangliste</li>
-                    </Link>
-                    <Link to={`/profile/${storageWrapper.getUser().username}`}>
-                        <li>Profil</li>
-                    </Link>
-                    {user != ({} as User) ? (
-                        <Link to="/login">
-                            <li>Login</li>
-                        </Link>
                     ) : (
-                        <Link to="/">
-                            <li onClick={() => storageWrapper.clearUser()}>
-                                Logout
-                            </li>
-                        </Link>
+                        <li>
+                            <Link to="/profile">Login</Link>
+                        </li>
                     )}
                 </ul>
             </nav>

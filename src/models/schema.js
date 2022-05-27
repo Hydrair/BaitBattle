@@ -20,16 +20,14 @@ export const schema = {
                 "points": {
                     "name": "points",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
                 "species": {
                     "name": "species",
                     "isArray": false,
-                    "type": {
-                        "enum": "FishSpecies"
-                    },
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -143,6 +141,27 @@ export const schema = {
                         "associatedWith": "userID"
                     }
                 },
+                "rank": {
+                    "name": "rank",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "points": {
+                    "name": "points",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -186,20 +205,7 @@ export const schema = {
             ]
         }
     },
-    "enums": {
-        "FishSpecies": {
-            "name": "FishSpecies",
-            "values": [
-                "BARSCH",
-                "HECHT",
-                "KARPFEN",
-                "SALMONIDE",
-                "WALLER",
-                "WEISSFISCH",
-                "ZANDER"
-            ]
-        }
-    },
+    "enums": {},
     "nonModels": {},
-    "version": "910de791c13bf280b691131fb0dfc773"
+    "version": "f0bdf0d31a7081e771f8534cca6e0681"
 };

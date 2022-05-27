@@ -1,5 +1,6 @@
 import React from "react";
-import { Fish } from "../../types";
+import { Fish } from "../../models";
+
 import "./pill.scss";
 
 export interface PillProps {

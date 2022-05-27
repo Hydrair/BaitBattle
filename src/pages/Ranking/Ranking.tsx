@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ranking.scss";
 import { Table } from "../../components/Table";
-import { View } from "../../components/View";
-import { User } from "../../types";
-import { url } from "../../services/provider";
-import { useQuery } from "react-query";
 
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import { DataStore, Predicates, SortDirection } from "aws-amplify";
+import { User } from "../../models";
 export interface RankingProps {}
 
-export function Ranking(props: RankingProps): JSX.Element {
-    const user = useQuery("user", () =>
-        fetch(`${url}/user`).then((res) => res.json())
-    );
-    if (user.isLoading) {
-        return <View>Loading...</View>;
-    }
-    return (
-        <View>
-            <Table data={user.data.Items} />
-        </View>
-    );
+function Ranking({ signOut, user }): JSX.Element {
+    const [users, setUsers] = useState<User[]>([]);
+    useEffect(() => {
+        const getUsers = async () => {
+            const users = await DataStore.query(User, Predicates.ALL, {
+                sort: (u) => u.points(SortDirection.DESCENDING),
+            });
+            setUsers(users);
+        };
+        getUsers();
+    }, []);
+    return <Table data={users} />;
 }
+export default withAuthenticator(Ranking);

@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "BaitBattle",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-a0fbfa40-ee76-4442-bb93-fdd7b5b270ef/amplify/backend/api/BaitBattle/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-09de297e-efcc-4b49-a06e-fc75bc750f59/amplify/backend/api/BaitBattle/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",
@@ -12,6 +12,10 @@
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
+      },
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authBaitBattle"
       }
     ],
     "conflictResolution": {

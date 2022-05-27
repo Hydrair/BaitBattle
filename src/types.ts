@@ -1,29 +1,9 @@
-export type User = {
-    id?: string;
-    username: string;
-    password?: string;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-    rank?: number;
-    points: number;
-    fish: [Fish];
-};
-
-export type Fish = {
-    id: number;
-    length: number;
-    points: number;
-    species: FishSpecies;
-    target: boolean;
-};
-
-enum FishSpecies {
-    "Barsch",
-    "Hecht",
-    "Karpfen",
-    "Salmonide",
-    "Waller",
-    "Weißfisch",
-    "Zander",
-}
+export const FishSpecies = [
+    { name: "Barsch", factor: 2.2 },
+    { name: "Hecht", factor: 1.0 },
+    { name: "Karpfen", factor: 1.4 },
+    { name: "Salmonide", factor: 1.6 },
+    { name: "Waller", factor: 0.8 },
+    { name: "Weißfisch", factor: 1.0 },
+    { name: "Zander", factor: 1.3 },
+];

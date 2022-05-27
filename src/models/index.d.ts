@@ -1,14 +1,6 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
-export enum FishSpecies {
-  BARSCH = "BARSCH",
-  HECHT = "HECHT",
-  KARPFEN = "KARPFEN",
-  SALMONIDE = "SALMONIDE",
-  WALLER = "WALLER",
-  WEISSFISCH = "WEISSFISCH",
-  ZANDER = "ZANDER"
-}
+
 
 
 
@@ -24,7 +16,7 @@ export declare class Fish {
   readonly id: string;
   readonly length?: number | null;
   readonly points?: number | null;
-  readonly species?: FishSpecies | keyof typeof FishSpecies | null;
+  readonly species?: string | null;
   readonly target?: boolean | null;
   readonly userID: string;
   readonly createdAt?: string | null;
@@ -39,6 +31,9 @@ export declare class User {
   readonly lastName?: string | null;
   readonly avatar?: string | null;
   readonly fish?: (Fish | null)[] | null;
+  readonly rank?: number | null;
+  readonly points?: number | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
