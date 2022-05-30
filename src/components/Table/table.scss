@@ -18,5 +18,21 @@ table {
         td:last-child {
             white-space: nowrap;
         }
+        tr:nth-child(1) {
+            background-color: gold;
+        }
+        tr:nth-child(2) {
+            background-color: silver;
+        }
+        tr:nth-child(3) {
+            background-color: #e4ba91;
+        }
+        tr:hover {
+            background-color: var(--blue-hover);
+        }
+        a {
+            // color: var(--gray-dark);
+            text-decoration: none;
+        }
     }
 }
