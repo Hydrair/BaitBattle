@@ -8,7 +8,6 @@ import { UserCard } from "../../components/UserCard";
 import { Pill } from "../../components/Pill";
 import UpdateFish from "./UpdateFish";
 import { useLocation } from "react-router";
-import { Badge } from "../../components/Badge";
 
 export interface ProfileProps {}
 enum Setup {
@@ -17,7 +16,7 @@ enum Setup {
     Change,
 }
 
-function Profile({ signOut, user }): JSX.Element {
+function ProfileUser({ signOut, user }): JSX.Element {
     const [hasProfile, setHasProfile] = useState<User>();
     const [hasSetup, setHasSetup] = useState(Setup.Profile);
     const [fish, setFish] = useState<Fish[]>();
@@ -60,10 +59,7 @@ function Profile({ signOut, user }): JSX.Element {
         };
 
         let id = user.attributes.sub;
-        if (
-            state?.owner === user.attributes.sub ||
-            state?.owner === undefined
-        ) {
+        if (state.owner === user.attributes.sub) {
             setIsOwner(true);
         } else {
             setHasProfile(state);
@@ -73,70 +69,50 @@ function Profile({ signOut, user }): JSX.Element {
         isOwner && getProfile(id);
         getRank(id);
         getFish(id);
-    }, [user, hasSetup, fishCount, state]);
+    }, [user, hasSetup, fishCount]);
 
     const filledout = () => {
         setHasSetup(Setup.Profile);
     };
 
-    if (isOwner && hasSetup === Setup.NewUser) {
+    if (isOwner && (hasSetup === Setup.NewUser || hasSetup === Setup.Change)) {
         return (
-            <div className="profileView">
+            <>
                 <UpdateProfile
                     update={filledout}
                     signOut={signOut}
                     user={user}
                 />
-            </div>
+            </>
         );
     } else if (hasProfile) {
         return (
-            <div className="profileView">
+            <>
                 <UserCard
                     name={`${hasProfile.firstName} ${hasProfile.lastName}`}
                     rank={rank}
                     points={hasProfile.points}
                     img={hasProfile.avatar}
                 />
-
                 {isOwner && (
-                    <details className="tooltip">
-                        <summary onClick={() => setHasSetup(Setup.Change)}>
-                            Profil bearbeiten
-                        </summary>
-                        <div className="updateFish">
-                            <UpdateProfile
-                                update={filledout}
-                                signOut={signOut}
-                                user={user}
-                            />
-                        </div>
-                    </details>
+                    <button onClick={() => setHasSetup(Setup.Change)}>
+                        Profil bearbeiten
+                    </button>
                 )}
                 <section>
                     <h2>Fische</h2>
-
                     {isOwner && (
-                        <details className="tooltip">
-                            <summary>Fisch eintragen</summary>
-                            <div className="updateFish">
-                                <UpdateFish
-                                    update={() => setFishCount(fishCount + 1)}
-                                    signOut={signOut}
-                                    user={user}
-                                />
-                            </div>
-                        </details>
+                        <UpdateFish
+                            update={() => setFishCount(fishCount + 1)}
+                            signOut={signOut}
+                            user={user}
+                        />
                     )}
-                    {fishCount > 0 && fish && (
-                        <div className="fishList">
-                            {fish.map((fish) => (
-                                <Pill fish={fish} key={fish.id} />
-                            ))}
-                        </div>
-                    )}
+                    {fishCount > 0 &&
+                        fish &&
+                        fish.map((fish) => <Pill fish={fish} key={fish.id} />)}
                 </section>
-            </div>
+            </>
         );
     }
     return <></>;
@@ -183,4 +159,4 @@ function Profile({ signOut, user }): JSX.Element {
     }
 }
 
-export default withAuthenticator(Profile);
+export default withAuthenticator(ProfileUser);

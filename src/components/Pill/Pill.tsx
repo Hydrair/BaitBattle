@@ -1,5 +1,6 @@
 import React from "react";
 import { Fish } from "../../models";
+import { Badge } from "../Badge";
 
 import "./pill.scss";
 
@@ -15,6 +16,7 @@ export function Pill(props: PillProps): JSX.Element {
             <div className="break" />
             <p className="length">Länge: {props.fish.length}</p>
             <p className="points">Punkte: {props.fish.points}</p>
+            <Badge />
         </section>
     );
 }

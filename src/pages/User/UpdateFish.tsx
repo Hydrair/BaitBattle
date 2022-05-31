@@ -49,7 +49,7 @@ function UpdateFish({ signOut, user, update }): JSX.Element {
     };
     return (
         <>
-            <div className="username form">
+            <div className="form">
                 <label htmlFor="species">Fischart</label>
                 <select onChange={(e) => setSpecies(e.target.value)}>
                     <option value="">Bitte auswählen</option>
@@ -60,7 +60,7 @@ function UpdateFish({ signOut, user, update }): JSX.Element {
                     ))}
                 </select>
             </div>
-            <div className="username form">
+            <div className="form">
                 <label htmlFor="length">Länge in cm</label>
                 <input
                     type="number"
@@ -68,7 +68,7 @@ function UpdateFish({ signOut, user, update }): JSX.Element {
                 />
                 entspricht {points} Punkten
             </div>
-            <div className="username form">
+            <div className="form">
                 <label htmlFor="target">Zielfisch</label>
                 <input
                     type="checkbox"

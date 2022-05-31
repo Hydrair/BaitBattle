@@ -47,7 +47,6 @@ function UpdateProfile({ signOut, user, update }): JSX.Element {
     };
     return (
         <>
-            <h1>Daten ändern</h1>
             <div className="avatar form">
                 <label htmlFor="avatar">Profilbild</label>
                 <input

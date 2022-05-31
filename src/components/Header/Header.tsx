@@ -22,7 +22,9 @@ export const Header = (): JSX.Element => {
                         <Link to="/ranking">Rangliste</Link>
                     </li>
                     <li>
-                        <Link to={`/profile`}>Profil</Link>
+                        <Link to={`/profile`} state={{}} replace={true}>
+                            Profil
+                        </Link>
                     </li>
                     {user ? (
                         <li onClick={signOut}>
