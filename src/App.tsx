@@ -28,24 +28,24 @@ DataStore.configure();
 // }
 
 function App() {
-    return (
-        <Authenticator.Provider>
-            <QueryClientProvider client={new QueryClient()}>
-                <BrowserRouter>
-                    <View>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/profile" element={<Profile />} />
+  return (
+    <Authenticator.Provider>
+      <QueryClientProvider client={new QueryClient()}>
+        <BrowserRouter>
+          <View>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
 
-                            <Route path="/ranking" element={<Ranking />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="*" element={<NoMatch />} />
-                        </Routes>
-                    </View>
-                </BrowserRouter>
-            </QueryClientProvider>
-        </Authenticator.Provider>
-    );
+              <Route path="/ranking" element={<Ranking />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NoMatch />} />
+            </Routes>
+          </View>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </Authenticator.Provider>
+  );
 }
 
 export default App;
